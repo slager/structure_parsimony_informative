@@ -41,7 +41,7 @@ sitelabels -> colnames(s)
 # Create L, a list of vectors for indexing:
 # length(L) = #samples
 # L[[1]] = c(1,2)
-# L[[nSamples]] = c(nSamples-1,nSamples)
+# L[[nSamples]] = c(2*nSamples-1,2*nSamples)
 lapply(seq(1,nrow(s)-1,2),function(x){x:(x+1)}) -> L
 
 #For each site (each column of s):
