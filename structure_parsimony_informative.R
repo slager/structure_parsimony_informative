@@ -16,6 +16,7 @@ parseStructureFile <- function(){
   
   ## Get sample labels
   s$V1 -> samplelabels  # Save the original sample labels
+  assign("samplelabels", samplelabels, envir = .GlobalEnv)
   # Relabel samples because duplicate rownames not allowed
   paste0(s$V1,c("a","b")) -> rownames(s) #Rownames useful for troubleshooting
   cat(nrow(s)/2,"samples\n")
@@ -91,7 +92,7 @@ writeOutStructure <- function(suffix){
   write(paste(c("",names(s)),collapse="\t",sep=""),file=paste0(filename,suffix))
   # Write Structure data
   write.table(s,file=paste0(filename,suffix),col.names=FALSE,row.names=samplelabels,append=TRUE,quote=FALSE,sep="\t")
-  cat("Wrote to",paste0(filename,suffix))
+  cat("Wrote to",paste0(filename,suffix),"\n")
   } #End of writeOutStructure
 
 ###  Where the action happens ###
@@ -105,9 +106,9 @@ directory <- "str_files/" ## Optional
 filenames <- paste0(directory,filenames) ## Optional
 for (filename in filenames){
   parseStructureFile() #Reads 'filename', writes 's'
-  #retainParsimonyInformative()
+  retainParsimonyInformative()
   retainRandomUnlinkedSNP() #Reads 's', writes 's'
-  writeOutStructure(suffix=".unlinked") #Reads 's', writes 'filename'+'suffix'
+  writeOutStructure(suffix=".unlinked.pi") #Reads 's', writes 'filename'+'suffix'
 }
 
 #### OBSOLETE CODE ####
