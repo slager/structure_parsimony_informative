@@ -3,16 +3,20 @@ library(data.table)
 
 parseStructureFile <- function(){
   missingdatainteger <- 0   ## 0 for stacks, -9 for pyRAD
+
   ### Parse Stacks STRUCTURE file
+  
   cat("Parsing",filename,"\n")
   cat("Missing data coded as",missingdatainteger,"\n")
-  fread(filename,data.table=F,verbose=F) -> s
-  
+
   ## Get locus labels vector
   ## This part is file-specific.
   readLines(filename,n=3)[2] -> a
   unlist(strsplit(a,split="\t"))[-1] -> sitelabels
+  
   cat(length(sitelabels),"SNPs\n")
+  
+  fread(filename,data.table=F,verbose=F) -> s
   
   ## Get sample labels
   s$V1 -> samplelabels  # Save the original sample labels
